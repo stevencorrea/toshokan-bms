@@ -1,11 +1,10 @@
 // Copyright 2023 Michael Larson
 // Toshokan-BMS for CINS242
-// Group-class Header
+// Group-class Source Code
 
 #include <toshokan-bms/Group.hpp>
 
 Group::Group(GroupName g) : m_name(g) {
-
 }
 
 bool Group::addMember(uint32_t user) {

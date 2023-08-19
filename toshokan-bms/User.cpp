@@ -1,20 +1,19 @@
 // Copyright 2023 Michael Larson
 // Toshokan-BMS for CINS242
-// User-class Header
+// User-class Source Code
 
 #include <toshokan-bms/User.hpp>
-
-#include <toshokan-bms/base64.hpp>
-#include <toshokan-bms/Group.hpp>
-#include <toshokan-bms/helperFunctions.hpp>
 
 #include <cstdint>
 #include <string>
 #include <vector>
 
+#include <toshokan-bms/base64.hpp>
+#include <toshokan-bms/Group.hpp>
+#include <toshokan-bms/helperFunctions.hpp>
+
 User::User(std::string first, std::string last, std::string display, uint32_t id) :
     m_fName(first), m_lName(last), m_displayName(display), m_employeeID(id) {
-    
     std::string tempPW = "password";
     m_password = base64_encode(tempPW);
     m_group = CLERK;
@@ -56,6 +55,13 @@ bool User::checkGroupMembership(GroupName g) const {
     return true;
 }
 
+bool User::checkPermissions(GroupName g) const {
+    if (g < m_group) {
+        return false;
+    }
+
+    return true;
+}
 bool User::verifyPW(std::string pw) const {
     if (base64_encode(pw) != m_password) {
         return false;
@@ -84,7 +90,7 @@ void User::changeGroupMembership(GroupName g) {
 std::string User::saveUserInfo() const {
     std::string data;
     std::string delimiter = ",";
-    
+
     data.append(m_fName);
     data.append(delimiter);
     data.append(m_lName);
@@ -96,7 +102,7 @@ std::string User::saveUserInfo() const {
     data.append(std::to_string(m_employeeID));
     data.append(delimiter);
     data.append(std::to_string(m_group));
-    
+
     return base64_encode(data);
 }
 
@@ -108,4 +114,3 @@ bool operator<(const User &lhs, const User &rhs) {
 bool operator==(const User &lhs, const User &rhs) {
     return lhs.m_employeeID == rhs.m_employeeID;
 }
-

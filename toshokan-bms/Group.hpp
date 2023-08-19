@@ -2,8 +2,8 @@
 // Toshokan-BMS for CINS242
 // Group-class Header
 
-#ifndef TOSHOKAN_BMS_GROUP_H_
-#define TOSHOKAN_BMS_GROUP_H_
+#ifndef TOSHOKAN_BMS_GROUP_HPP_
+#define TOSHOKAN_BMS_GROUP_HPP_
 
 #include <cstdint>
 #include <set>
@@ -17,15 +17,15 @@ enum GroupName {
 };
 
 class Group {
-  private:
+ private:
     GroupName m_name;
     std::set<uint32_t> m_users;
 
-  public:
-    Group(GroupName);
+ public:
+    explicit Group(GroupName);
     bool addMember(uint32_t);
     bool removeMember(uint32_t);
     bool checkMember(uint32_t) const;
 };
 
-#endif  // TOSHOKAN_BMS_GROUP_H_
+#endif  // TOSHOKAN_BMS_GROUP_HPP_
